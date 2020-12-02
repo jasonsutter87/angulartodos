@@ -1,9 +1,11 @@
 import {Component, OnInit} from '@angular/core';
+import {FormControl, FormGroup} from '@angular/forms';
+
 
 interface Todo {
+  id: number;
   date: string;
   todoText: string;
-  id: number;
 }
 
 @Component({
@@ -11,14 +13,15 @@ interface Todo {
   templateUrl: './todos-page.component.html',
   styleUrls: ['./todos-page.component.scss']
 })
+
 export class TodosPageComponent implements OnInit {
- constructor() {
+  private id: number;
+  private date: any = Date.now();
+  private todoForm: FormGroup;
+  constructor() {
   }
-  todos: Todo[] = [
-  ];
 
-  todoInput = '';
-
+  todos: Todo[] = [];
   pageTitle = 'My Angular Todo Page';
 
   deleteTodo(id) {
@@ -27,10 +30,13 @@ export class TodosPageComponent implements OnInit {
     this.todos.splice(todoitemIndex, 1);
   }
 
-  public onSubmit() {
-    const date: string = Date.now();
-    let id: 0;
+  ngOnInit() {
+    this.todoForm = new FormGroup({
+      todoInput: new FormControl()
+    })
+  }
 
+  public onSubmit() {
     if (this.todos.length < 1) {
       this.id = 0;
     } else {
@@ -39,16 +45,16 @@ export class TodosPageComponent implements OnInit {
 
     const newTodo: Todo = {
       id: this.id,
-      date,
-      todoText: this.todoInput
+      date: this.date,
+      todoText:  this.todoForm.value.todoInput
     };
+
+
     this.todos.push(newTodo);
-    console.log(newTodo);
-
-    this.todoInput = '';
-
+    this.todoForm.reset();
   }
 
-  ngOnInit() {
-  }
+
+
+
 }

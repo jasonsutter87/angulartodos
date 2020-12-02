@@ -5,8 +5,8 @@
 
   <div class="row justify-content-center">
     <div class="col-6">
-      <form (submit)="onSubmit()">
-      <input type="text"  name="todoInput" id="todoInput" placeholder="Enter new Todo" [(ngModel)]="todoInput" >
+      <form [formGroup]="todoForm" (ngSubmit)="onSubmit()">
+      <input type="text" formControlName="todoInput" id="todoInput" placeholder="Enter new Todo" >
 
       <div class="py-3 text-center">
         <button type="submit" class="btn btn-primary" >Add Todo</button>
